@@ -247,10 +247,33 @@ public class AdminDashboardView extends JFrame {
         }
 
         int empleadoId = (int) tableModel.getValueAt(selectedRow, 0);
-        String nombre = JOptionPane.showInputDialog("Nombre:", tableModel.getValueAt(selectedRow, 1));
-        String apellido = JOptionPane.showInputDialog("Apellido:", tableModel.getValueAt(selectedRow, 2));
-        String email = JOptionPane.showInputDialog("Email:", tableModel.getValueAt(selectedRow, 3));
+    
+        // Obtener los valores actuales
+        String nombreActual = (String) tableModel.getValueAt(selectedRow, 1);
+        String apellidoActual = (String) tableModel.getValueAt(selectedRow, 2);
+        String emailActual = (String) tableModel.getValueAt(selectedRow, 3);
+
+        // Mostrar diálogos de entrada para cada campo
+        String nombre = JOptionPane.showInputDialog("Nombre:", nombreActual);
+        if (nombre == null) { // Cancelar la operación si el usuario presiona "Cancelar"
+            return;
+        }
+
+        String apellido = JOptionPane.showInputDialog("Apellido:", apellidoActual);
+        if (apellido == null) { 
+            return;
+        }
+
+        String email = JOptionPane.showInputDialog("Email:", emailActual);
+        if (email == null) {
+            return;
+        }
+
         String password = JOptionPane.showInputDialog("Contraseña:");
+        if (password == null) {
+            return;
+        }
+
         boolean administrador = JOptionPane.showConfirmDialog(null, "¿Es administrador?") == JOptionPane.YES_OPTION;
 
         try {
@@ -264,6 +287,7 @@ public class AdminDashboardView extends JFrame {
             JOptionPane.showMessageDialog(this, "Error al editar el empleado: " + e.getMessage());
         }
     }
+
 
     private void eliminarEmpleado() {
         int selectedRow = usuariosTable.getSelectedRow();
